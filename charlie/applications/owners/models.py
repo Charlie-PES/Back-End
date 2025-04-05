@@ -1,9 +1,9 @@
 from pymongo import IndexModel
 
-from owners.schemas import UserIn
+from owners.schemas import OwnerIn
 
 
-class OwnerDAO(UserIn):
+class OwnerDAO(OwnerIn):
     # TBD
     pass
 

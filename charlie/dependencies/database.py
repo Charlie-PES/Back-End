@@ -13,4 +13,4 @@ def start_db(app: FastAPI) -> None:
 
 def close_db(app: FastAPI) -> None:
     app.mongodb_client.close()
-    print("Disconnected from MongoD")
+    print("Disconnected from MongoDB")

@@ -1,4 +1,4 @@
-from users.schemas import Item, User
+from schemas import Item, User
 
 
 class UserDAO(User):
