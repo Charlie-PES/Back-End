@@ -4,3 +4,5 @@ __pycache__/
 
 # Ignorar arquivos de cache em subdiretórios
 **/__pycache__/
+.env
+.ruff_cache
