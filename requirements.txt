@@ -4,3 +4,5 @@ pydantic
 pydantic_settings
 flake8
 ruff
+bcrypt
+motor

@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 import uvicorn
-from applications.users.routes import router as user_router
-from dependencies.database import start_db, close_db
-from settings import Settings
+from charlie.applications.users.routes import router as user_router
+from charlie.dependencies.database import start_db, close_db
+from charlie.settings import Settings
 from contextlib import asynccontextmanager
 
 settings = Settings()
