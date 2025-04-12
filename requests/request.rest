@@ -1,6 +1,35 @@
+# Root endpoint
 GET http://127.0.0.1:8080/
 
 ###
 
 # Test for the router
 GET http://127.0.0.1:8080/v1/test
+
+###
+
+# Authentication for the user
+GET http://127.0.0.1:5000/v1/users/auth/4
+
+###
+
+# Endpoint for user registration
+POST http://127.0.0.1:5000/v1/users/auth/register
+Content-Type: application/json
+
+{
+    "username": "testuserTres",
+    "email": "testTrês@example.com",
+    "password": "minhasenha123"
+}
+
+###
+
+# Endpoint for user login
+POST http://127.0.0.1:5000/v1/users/auth/login
+Content-Type: application/json
+
+{
+    "username": "testuserDois",
+    "password": "minhasenha123567"
+}

@@ -1,7 +1,9 @@
 import os
 import json
+import bcrypt
 from fastapi import APIRouter, HTTPException, status
 from typing import List
+from pydantic import BaseModel
 
 from .schemas import Item, ItemCreate, UserIn
 
@@ -11,6 +13,14 @@ router = APIRouter(prefix="/users", tags=["users"])
 USERS_DB_PATH = os.path.join("db", "users.json")
 ITEMS_DB_PATH = os.path.join("db", "items.json")
 
+# Funções para hash de senha
+def hash_password(password: str) -> str:
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed.decode('utf-8')
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 # Funções auxiliares para carregar e salvar os dados
 def load_db(file_path: str):
@@ -69,30 +79,35 @@ async def register(user: UserIn):
 
     new_id = max([int(i) for i in users_db.keys()], default=0) + 1 if users_db else 1
 
-    # Cria manualmente o dicionário do usuário, incluindo a senha
+    # Cria o dicionário do usuário com a senha hasheada
     new_user_dict = {
         "id": new_id,
         "username": user.username,
         "email": user.email,
-        "password": user.password,  # Em produção, utilize hash para a senha!
+        "password": hash_password(user.password),
     }
     users_db[str(new_id)] = new_user_dict
     save_users(users_db)
     return {"message": "User registered successfully", "user": new_user_dict}
 
 
+# Modelo para dados de login
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
 @router.post("/auth/login")
-async def login(username: str, password: str):
-    users_db = load_users()
+async def login(login_data: LoginRequest):
+    users_db = load_users()  # Carrega os usuários do banco de dados
     for user_data in users_db.values():
-        if user_data["username"] == username:
-            # Valida a senha informada com a senha armazenada
-            if user_data.get("password") != password:
+        if user_data["username"] == login_data.username:
+            # Verifica a senha usando bcrypt
+            if not verify_password(login_data.password, user_data.get("password")):
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="Invalid credentials",
                 )
-            user_data.pop("password", None)
+            user_data.pop("password", None)  # Remover a senha antes de retornar
             return {"message": "Login successful", "user": user_data}
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"

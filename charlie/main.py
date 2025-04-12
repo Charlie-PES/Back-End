@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 import uvicorn
-
-
 from utils.routes import register_routes
 from dependencies.database import start_db, close_db
 from settings import Settings
