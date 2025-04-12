@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, status
 from typing import List
 from pydantic import BaseModel
 
-from .schemas import Item, ItemCreate, UserCreate
+from .schemas import Item, ItemCreate, UserIn
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -65,7 +65,7 @@ async def test():
 
 # Endpoints de autenticação
 @router.post("/auth/register", status_code=status.HTTP_201_CREATED)
-async def register(user: UserCreate):
+async def register(user: UserIn):
     users_db = load_users()
     # Verifica se já existe usuário com o mesmo username ou email
     for existing_user in users_db.values():

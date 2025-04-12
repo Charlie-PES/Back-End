@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 import uvicorn
-from charlie.applications.users.routes import router as user_router
-from charlie.dependencies.database import start_db, close_db
-from charlie.settings import Settings
+from utils.routes import register_routes
+from dependencies.database import start_db, close_db
+from settings import Settings
 from contextlib import asynccontextmanager
 
 settings = Settings()
@@ -17,14 +17,14 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Charlie API", lifespan=lifespan)
-    app.include_router(user_router, prefix="/v1")
+    register_routes(app)
     return app
 
 
 app = create_app()
 
 
-def main():
+def main() -> None:
     uvicorn.run(
         "main:app", host=settings.HOST, port=settings.PORT, reload=settings.RELOAD
     )
