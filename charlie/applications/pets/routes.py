@@ -1,17 +1,31 @@
-from fastapi import APIRouter
+from collections.abc import Iterable
+from fastapi import APIRouter, Depends, status
+from utils.pyobjectid import PyObjectId
+from dependencies.database import get_database
+from .schemas import PetIn
+from .models import PetDAO
 from settings import Settings
-
+from motor.motor_asyncio import AsyncIOMotorClient
+from . import controllers as pets_controllers
 
 settings = Settings()
 router = APIRouter(prefix="/pets", tags=["pets"])
 
 
-# POST api/pet -> demands PetIn, return PetDAO
+@router.post("", status_code=status.HTTP_201_CREATED)
+async def create_one(
+    body: PetIn, db: AsyncIOMotorClient = Depends(get_database)
+) -> PetDAO:
+    return await pets_controllers.create_one(pet_in=body, db=db)
 
-# GET api/pet -> return Iterable[PetDAO]
 
-# GET api/pet/id -> return PetDAO
+@router.get("/{pet_id}", status_code=status.HTTP_200_OK)
+async def read_one(
+    pet_id: PyObjectId, db: AsyncIOMotorClient = Depends(get_database)
+) -> PetDAO:
+    return await pets_controllers.read_one(pet_id=pet_id, db=db)
 
-# PATCH api/pet/id -> demands PetUpdate, return None
 
-# DELETE api/pet/id -> return None
+@router.get("", status_code=status.HTTP_200_OK)
+async def read_many(db: AsyncIOMotorClient = Depends(get_database)) -> Iterable[PetDAO]:
+    return await pets_controllers.read_many(db=db)

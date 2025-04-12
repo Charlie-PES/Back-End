@@ -1,5 +1,7 @@
-from datetime import date
-from pydantic import BaseModel, EmailStr, Field
+from typing_extensions import Annotated
+from pydantic import BaseModel, BeforeValidator, EmailStr, Field
+
+PyObjectId = Annotated[str, BeforeValidator(str)]
 
 
 # WORKING IN PROGRESS
@@ -7,7 +9,7 @@ class OwnerIn(BaseModel):
     name: str
     email: EmailStr
     picture: str  # necessary? s3 url
-    birthday: date
+    # birthday: date
 
 
 class OwnerOut(OwnerIn):

@@ -1,4 +1,4 @@
-from schemas import Item, User
+from .schemas import Item, User
 
 
 class UserDAO(User):
@@ -9,6 +9,10 @@ class UserDAO(User):
     def indexes(cls):
         []  # TBD
 
+    @classmethod
+    def coll_name(cls) -> str:
+        return "users"
+
 
 class ItemDAO(Item):
     # wip
@@ -17,3 +21,7 @@ class ItemDAO(Item):
     @classmethod
     def indexes(cls):
         []  # TBD
+
+    @classmethod
+    def coll_name(cls) -> str:
+        return "items"

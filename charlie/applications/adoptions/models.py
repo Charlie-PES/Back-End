@@ -1,6 +1,6 @@
 from pymongo import IndexModel
 
-from schemas import AdoptionIn
+from .schemas import AdoptionIn
 
 
 class AdoptionDAO(AdoptionIn):
@@ -11,3 +11,7 @@ class AdoptionDAO(AdoptionIn):
     @classmethod
     def indexes(cls):
         [IndexModel(...)]  # TBD
+
+    @classmethod
+    def coll_name(cls) -> str:
+        return "adoptions"

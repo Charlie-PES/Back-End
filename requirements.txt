@@ -4,3 +4,4 @@ pydantic
 pydantic_settings
 flake8
 ruff
+pydantic[email]
