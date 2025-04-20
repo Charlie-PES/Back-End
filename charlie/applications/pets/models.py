@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import ConfigDict, Field
 from pymongo import IndexModel
 
-from utils.pyobjectid import PyObjectId
+from charlie.utils.pyobjectid import PyObjectId
 from .schemas import PetIn
 
 
@@ -21,5 +21,5 @@ class PetDAO(PetIn):
 
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
-        json_encoders={PyObjectId: str},
+        populate_by_name=True,
     )
