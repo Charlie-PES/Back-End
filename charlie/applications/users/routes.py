@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from .schemas import Item, ItemCreate, UserIn
 
-router = APIRouter(prefix="/users", tags=["users"])
+router = APIRouter(tags=["users"])
 
 # Definindo os caminhos dos arquivos JSON
 USERS_DB_PATH = os.path.join("db", "users.json")
@@ -72,6 +72,7 @@ async def register(user: UserIn):
         if (
             existing_user.get("username") == user.username
             or existing_user.get("email") == user.email
+            or existing_user.get("cpf") == user.cpf
         ):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists"
@@ -84,6 +85,9 @@ async def register(user: UserIn):
         "id": new_id,
         "username": user.username,
         "email": user.email,
+        "cpf": user.cpf,
+        "tutor": user.tutor,
+        "adopter": user.adopter,
         "password": hash_password(user.password),
     }
     users_db[str(new_id)] = new_user_dict

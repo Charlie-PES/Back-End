@@ -9,7 +9,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from . import controllers as pets_controllers
 
 settings = Settings()
-router = APIRouter(prefix="/pets", tags=["pets"])
+router = APIRouter(tags=["pets"])
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)

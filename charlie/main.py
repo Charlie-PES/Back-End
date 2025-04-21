@@ -5,6 +5,7 @@ from dependencies.database import start_db, close_db
 from settings import Settings
 from contextlib import asynccontextmanager
 
+
 settings = Settings()
 
 

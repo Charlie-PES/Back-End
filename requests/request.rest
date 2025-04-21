@@ -1,35 +1,39 @@
-# Root endpoint
-GET http://127.0.0.1:8080/
+# Teste do endpoint raiz
+GET http://127.0.0.1:5000/v1/users/test
 
 ###
 
-# Test for the router
-GET http://127.0.0.1:8080/v1/test
+# Teste do roteador
+GET http://127.0.0.1:5000/v1/users/test
 
 ###
 
-# Authentication for the user
-GET http://127.0.0.1:5000/v1/users/auth/4
-
-###
-
-# Endpoint for user registration
+# Endpoint para registro de usuário
 POST http://127.0.0.1:5000/v1/users/auth/register
 Content-Type: application/json
 
 {
     "username": "testuserTres",
-    "email": "testTrês@example.com",
+    "email": "testTres@example.com",
+    "cpf": "12345678900",
+    "tutor": false,
+    "adopter": false,
+    "password": "minhasenha123"
+
+}
+
+###
+
+# Endpoint para login de usuário
+POST http://127.0.0.1:5000/v1/users/auth/login
+Content-Type: application/json
+
+{
+    "username": "testuserTres",
     "password": "minhasenha123"
 }
 
 ###
 
-# Endpoint for user login
-POST http://127.0.0.1:5000/v1/users/auth/login
-Content-Type: application/json
-
-{
-    "username": "testuserDois",
-    "password": "minhasenha123567"
-}
+# Endpoint para buscar perfil do usuário
+GET http://127.0.0.1:5000/v1/users/auth/profile?user_id=1
