@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 from utils.routes import register_routes
 from dependencies.database import start_db, close_db
 from settings import Settings
@@ -18,6 +19,16 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Charlie API", lifespan=lifespan)
+    
+    # Configuração do CORS
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Ajuste isso para os domínios permitidos em produção
+        allow_credentials=True,
+        allow_methods=["*"],  # Permite todos os métodos, incluindo OPTIONS
+        allow_headers=["*"],
+    )
+    
     register_routes(app)
     return app
 
