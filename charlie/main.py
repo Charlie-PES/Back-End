@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Charlie API", lifespan=lifespan)
-    
+
     # Configuração do CORS
     app.add_middleware(
         CORSMiddleware,
@@ -28,7 +28,7 @@ def create_app() -> FastAPI:
         allow_methods=["*"],  # Permite todos os métodos, incluindo OPTIONS
         allow_headers=["*"],
     )
-    
+
     register_routes(app)
     return app
 

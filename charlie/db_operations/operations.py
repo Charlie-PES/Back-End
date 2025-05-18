@@ -1,5 +1,6 @@
 from collections.abc import AsyncIterable
 from bson import ObjectId
+from fastapi import HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
 from db_operations.utils import DatabaseError, DocumentNotFoundError
 from pymongo.errors import DuplicateKeyError, PyMongoError
@@ -17,8 +18,9 @@ async def create_one(
     try:
         result = await collection.insert_one(document_data)
     except DuplicateKeyError:
-        raise Exception(
-            f"DuplicateKeyError: A document with the same _id already exists in the {collection_name} collection."
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Document with the same _id already exists in {collection_name} collection.",
         )
     except PyMongoError as e:
         raise DatabaseError(
@@ -39,9 +41,11 @@ async def read_one(
     try:
         result = await collection.find_one(criteria)
         if not result:
-            raise DocumentNotFoundError(
-                f"Document not found in {collection_name} collection with criteria: {criteria}"
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Document not found in {collection_name} collection with criteria: {criteria}",
             )
+
     except PyMongoError as e:
         raise DatabaseError(f"Error while accessing the database: {str(e)}")
 
@@ -67,8 +71,9 @@ async def delete_one(
     try:
         result = await collection.delete_one(criteria)
         if not result.deleted_count:
-            raise DocumentNotFoundError(
-                f"Document not found in {collection_name} collection with criteria: {criteria}"
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Document not found in {collection_name} collection with criteria: {criteria}",
             )
     except PyMongoError as e:
         raise DatabaseError(f"Error while accessing the database: {str(e)}")

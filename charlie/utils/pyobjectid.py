@@ -6,8 +6,7 @@ from pydantic.json_schema import JsonSchemaValue
 class PyObjectId(ObjectId):
     @classmethod
     def __get_pydantic_json_encoder__(cls):
-        # Retorna o próprio objeto para o MongoDB
-        return lambda x: x
+        return lambda x: str(x)
 
     @classmethod
     def __get_pydantic_json_schema__(

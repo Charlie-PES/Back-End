@@ -1,9 +1,11 @@
 from typing import Literal
-from bson import ObjectId
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
+
+from charlie.applications.common_schemas.base import AppBaseModel
+from charlie.utils.pyobjectid import PyObjectId
 
 
-class PetTraits(BaseModel):
+class PetTraits(AppBaseModel):
     size: Literal["small", "medium", "large"]
     breed: str | None = None
     color: str  # TBD
@@ -12,7 +14,7 @@ class PetTraits(BaseModel):
     trained: bool = False
 
 
-class PetIn(BaseModel):
+class PetIn(AppBaseModel):
     name: str
     age_months: int = Field(
         ..., ge=0
@@ -22,15 +24,10 @@ class PetIn(BaseModel):
 
 
 class PetOut(PetIn):
-    id: str
-
-    model_config = ConfigDict(
-        arbitrary_types_allowed=True,
-        json_encoders={ObjectId: str},
-    )
+    id: PyObjectId = Field(alias="_id", default=None)
 
 
-class PetUpdate(BaseModel):
+class PetUpdate(AppBaseModel):
     name: str | None = None
     age_months: int | None = None
     traits: PetTraits | None = None
