@@ -1,17 +1,14 @@
-from pydantic import BaseModel
+from bson import ObjectId
 from typing import Optional
 
+from pydantic import Field
 
-class User(BaseModel):
-    id: int
-    username: str
-    cpf: str
-    email: str
-    tutor: bool
-    adopter: bool
+from charlie.applications.common_schemas.base import AppBaseModel
+from charlie.applications.users.utils import hash_password
+from charlie.utils.pyobjectid import PyObjectId
 
 
-class UserIn(BaseModel):
+class UserIn(AppBaseModel):
     username: str
     cpf: str
     email: str
@@ -19,13 +16,24 @@ class UserIn(BaseModel):
     tutor: bool
     adopter: bool
 
-
-class Item(BaseModel):
-    id: int
-    name: str
-    description: Optional[str] = None
+    def with_hashed_password(self) -> "UserIn":
+        return self.model_copy(update={"password": hash_password(self.password)})
 
 
-class ItemCreate(BaseModel):
-    name: str
-    description: Optional[str] = None
+class UserOut(AppBaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
+    username: str
+    cpf: str
+    email: str
+    tutor: bool
+    adopter: bool
+
+
+class LoginRequest(AppBaseModel):
+    username: str
+    password: str
+
+
+class LoginResponse(AppBaseModel):
+    message: str
+    user: UserOut

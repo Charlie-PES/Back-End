@@ -5,6 +5,7 @@ from pymongo import IndexModel
 
 from charlie.utils.pyobjectid import PyObjectId
 from .schemas import PetIn
+from bson import ObjectId
 
 
 class PetDAO(PetIn):
@@ -18,8 +19,3 @@ class PetDAO(PetIn):
     @classmethod
     def coll_name(self) -> str:
         return "pets"
-
-    model_config = ConfigDict(
-        arbitrary_types_allowed=True,
-        populate_by_name=True,
-    )

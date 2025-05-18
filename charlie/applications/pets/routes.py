@@ -29,3 +29,11 @@ async def read_one(
 @router.get("", status_code=status.HTTP_200_OK)
 async def read_many(db: AsyncIOMotorClient = Depends(get_database)) -> Iterable[PetDAO]:
     return await pets_controllers.read_many(db=db)
+
+
+@router.delete("/{pet_id}", status_code=status.HTTP_200_OK)
+async def delete_one(
+    pet_id: PyObjectId,
+    db: AsyncIOMotorClient = Depends(get_database),
+) -> None:
+    return await pets_controllers.delete_one(db=db, pet_id=pet_id)
