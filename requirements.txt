@@ -7,3 +7,4 @@ ruff
 pydantic[email]
 bcrypt
 motor
+validate-docbr
