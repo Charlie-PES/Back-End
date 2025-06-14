@@ -19,8 +19,13 @@ async def read_one(pet_id: PyObjectId, db: AsyncIOMotorClient) -> PetDAO:
     return await read_one_op(entity=PetDAO, criteria=ObjectId(pet_id), db=db)
 
 
-async def read_many(db: AsyncIOMotorClient) -> Iterable[PetDAO]:
-    return await read_many_op(entity=PetDAO, db=db)
+async def read_many(
+    db: AsyncIOMotorClient, is_available: bool | None
+) -> Iterable[PetDAO]:
+    filters = {}
+    if is_available is not None:
+        filters["is_available"] = is_available
+    return await read_many_op(entity=PetDAO, db=db, filters=filters)
 
 
 async def delete_one(pet_id: PyObjectId, db: AsyncIOMotorClient) -> None:

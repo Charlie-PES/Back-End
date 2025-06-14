@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
 from db_operations.utils import DatabaseError, DocumentNotFoundError
 from pymongo.errors import DuplicateKeyError, PyMongoError
-from utils.types import Entity, EntityIn
+from utils.types import Entity, EntityIn, EntityUpdate
 from typing import Any
 from typing import Type
 
@@ -53,11 +53,12 @@ async def read_one(
 
 
 async def read_many(
-    entity: Type[Entity], db: AsyncIOMotorClient
+    entity: Type[Entity], db: AsyncIOMotorClient, filters: dict[str, Any] | None = None
 ) -> AsyncIterable[Entity]:
+    filters = filters or {}
     collection_name = entity.coll_name()
     collection: AsyncIOMotorCollection = db[collection_name]
-    documents = await collection.find().to_list(length=None)
+    documents = await collection.find(filters).to_list(length=None)
     return [entity.model_validate(doc) for doc in documents]
 
 
@@ -79,6 +80,24 @@ async def delete_one(
         raise DatabaseError(f"Error while accessing the database: {str(e)}")
 
 
-# todo: implement update_one
-async def update_one() -> None:
-    pass
+async def update_one(
+    entity: Type[Entity],
+    criteria: dict[str, Any] | ObjectId,
+    update_data: dict[str, Any],
+    db: AsyncIOMotorClient,
+) -> None:
+    if isinstance(criteria, ObjectId):
+        criteria = {"_id": criteria}
+    collection_name = entity.coll_name()
+    collection: AsyncIOMotorCollection = db[collection_name]
+
+    try:
+        result = await collection.update_one(criteria, update_data)
+        if not result.matched_count:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Document not found in {collection_name} collection with criteria: {criteria}",
+            )
+
+    except PyMongoError as e:
+        raise DatabaseError(f"Error while updating the document: {str(e)}")

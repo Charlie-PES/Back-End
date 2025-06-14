@@ -17,8 +17,3 @@ class OwnerDAO(OwnerIn):
     @classmethod
     def coll_name(cls) -> str:
         return "owners"
-
-    model_config = ConfigDict(
-        arbitrary_types_allowed=True,
-        json_encoders={ObjectId: str},
-    )

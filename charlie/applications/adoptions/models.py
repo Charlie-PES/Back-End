@@ -1,17 +1,19 @@
+from typing import Literal, Optional
+
+from pydantic import Field
 from pymongo import IndexModel
 
+from charlie.utils.pyobjectid import PyObjectId
 from .schemas import AdoptionIn
 
 
 class AdoptionDAO(AdoptionIn):
-    # TBD
-    pass
-
-    # TBD
-    @classmethod
-    def indexes(cls):
-        [IndexModel(...)]  # TBD
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
 
     @classmethod
-    def coll_name(cls) -> str:
+    def indexes(cls) -> list[IndexModel]:
+        []  # TBD
+
+    @classmethod
+    def coll_name(self) -> str:
         return "adoptions"

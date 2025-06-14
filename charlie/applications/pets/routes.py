@@ -1,5 +1,6 @@
 from collections.abc import Iterable
-from fastapi import APIRouter, Depends, status
+from typing import Optional
+from fastapi import APIRouter, Depends, Query, status
 from utils.pyobjectid import PyObjectId
 from dependencies.database import get_database
 from .schemas import PetIn
@@ -27,8 +28,11 @@ async def read_one(
 
 
 @router.get("", status_code=status.HTTP_200_OK)
-async def read_many(db: AsyncIOMotorClient = Depends(get_database)) -> Iterable[PetDAO]:
-    return await pets_controllers.read_many(db=db)
+async def read_many(
+    is_available: bool | None = Query(None),
+    db: AsyncIOMotorClient = Depends(get_database),
+) -> Iterable[PetDAO]:
+    return await pets_controllers.read_many(db=db, is_available=is_available)
 
 
 @router.delete("/{pet_id}", status_code=status.HTTP_200_OK)

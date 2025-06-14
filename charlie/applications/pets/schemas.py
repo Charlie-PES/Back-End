@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from typing import Literal
 from pydantic import Field
 
@@ -12,15 +13,16 @@ class PetTraits(AppBaseModel):
     fur_type: Literal["short", "medium", "long", "hairless"]
     temperament: Literal["calm", "energetic", "aggressive", "friendly"]
     trained: bool = False
+    description: str | None = None
 
 
 class PetIn(AppBaseModel):
     name: str
-    age_months: int = Field(
-        ..., ge=0
-    )  # with this we make an estimate of the birthday to inner control
+    birthday_date: datetime
     traits: PetTraits
-    picture: str  # s3 url
+    picture: str
+    is_available: bool = True
+    additional_data: dict[str, str] | None = None
 
 
 class PetOut(PetIn):

@@ -1,10 +1,6 @@
 from pydantic import EmailStr, Field, model_validator
 from charlie.applications.owners.utils import VALIDATOR_STRATEGY
-from charlie.utils.identifier_validators import (
-    CNPJValidator,
-    CPFValidator,
-    IdentifierValidator,
-)
+from charlie.utils.identifier_validators import IdentifierValidator
 from charlie.utils.pyobjectid import PyObjectId
 from typing import Any, Literal
 from charlie.applications.common_schemas.base import AppBaseModel
@@ -28,12 +24,14 @@ class OwnerDetails(AppBaseModel):
 class OwnerBase(AppBaseModel):
     type: Literal["tutor", "org"]
     name: str = Field(..., min_length=1, max_length=100)
+    pets: list[PyObjectId] = Field(default_factory=list)
     surname: str | None = Field(None, min_length=1, max_length=100)
     address: list[Address] = Field(default_factory=list)
     owner_details: OwnerDetails | None = None
     email: EmailStr
     phone: str
     identifier: str
+    picture: str
 
 
 class OwnerIn(OwnerBase):
@@ -61,3 +59,10 @@ class LoginRequest(AppBaseModel):
 class LoginResponse(AppBaseModel):
     message: str
     owner: OwnerOut
+
+
+class OwnerUpdate(AppBaseModel):
+    name: str | None = Field(None, min_length=1, max_length=100)
+    surname: str | None = Field(None, min_length=1, max_length=100)
+    owner_details: OwnerDetails | None = None
+    picture: str | None = None
