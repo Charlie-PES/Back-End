@@ -1,9 +1,8 @@
-# Back-End
+# 🐾 Pets Adoção - Back-End
+Projeto back-end de um sistema de adoção de pets. Desenvolvido utilizando **FastAPI** e **Uvicorn**.
 
-Este é um projeto de back-end utilizando **FastAPI** e **Uvicorn**.
 
 ## Pré-requisitos
-
 Certifique-se de ter o seguinte instalado em sua máquina:
 
 - Python 3.8 ou superior
@@ -17,37 +16,24 @@ Certifique-se de ter o seguinte instalado em sua máquina:
    git clone <URL_DO_REPOSITORIO>
    cd charlie-backend
    ```
+
 2. Crie um ambiente com Anaconda ou use um virtual:
 
    **python3** **-m** **venv** **venv**
 
    **source** **venv/bin/activate**  **# No Windows: venv\Scripts\activate**
+
 3. No diretório raiz, instale o projeto como um pacote:
 
    **pip install -e .**
 
 ## Executando o Servidor
-
 1. Configure o .env e execute no diretório raiz:
 
    **python -m charlie**
 3. O servidor estará disponível em: [http://127.0.0.1:8080](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
 
-## Endpoints Disponíveis
-
-* **GET /** : Retorna uma mensagem de boas-vindas.
-* **GET /v1/test** : Retorna uma mensagem de teste.
-
-## Testando os Endpoints
-
-Você pode testar os endpoints utilizando o arquivo `request.rest` com a extensão [REST Client](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) no VS Code. Basta abrir o arquivo e clicar em "Send Request" nos endpoints.
-
-## Contribuição
-
-Sinta-se à vontade para abrir issues ou enviar pull requests para melhorias.
 
 ## Licença
 
 Este projeto está sob a licença [MIT](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
-
-**Substitua `<URL_DO_REPOSITORIO>` pelo link do **repositório Git, caso aplicável.
