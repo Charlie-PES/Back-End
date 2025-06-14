@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from typing import Literal
 from pydantic import Field
+from typing import Any
 
 from charlie.applications.common_schemas.base import AppBaseModel
 from charlie.utils.pyobjectid import PyObjectId
@@ -22,7 +23,8 @@ class PetIn(AppBaseModel):
     traits: PetTraits
     picture: str
     is_available: bool = True
-    additional_data: dict[str, str] | None = None
+    owner_id: PyObjectId
+    additional_data: dict[str, Any] | None = None
 
 
 class PetOut(PetIn):
