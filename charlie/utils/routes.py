@@ -1,6 +1,6 @@
-from applications.pets.routes import router as pets_router
-from applications.owners.routes import router as owners_router
-from applications.adoptions.routes import router as adoptions_router
+from charlie.applications.pets.routes import router as pets_router
+from charlie.applications.owners.routes import router as owners_router
+from charlie.applications.adoptions.routes import router as adoptions_router
 
 from fastapi import FastAPI
 

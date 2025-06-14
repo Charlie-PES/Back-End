@@ -1,11 +1,11 @@
 from collections.abc import Iterable
 from fastapi import HTTPException
-from applications.adoptions.models import AdoptionDAO
-from applications.pets.models import PetDAO
-from applications.owners.models import OwnerDAO
+from charlie.applications.adoptions.models import AdoptionDAO
+from charlie.applications.pets.models import PetDAO
+from charlie.applications.owners.models import OwnerDAO
 from charlie.applications.adoptions.schemas import AdoptionIn
-from utils.pyobjectid import PyObjectId
-from db_operations.operations import (
+from charlie.utils.pyobjectid import PyObjectId
+from charlie.db_operations.operations import (
     create_one as create_one_op,
     read_one as read_one_op,
     read_many as read_many_op,

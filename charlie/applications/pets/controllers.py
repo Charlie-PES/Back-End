@@ -1,12 +1,12 @@
 from collections.abc import Iterable
 from bson import ObjectId
-from applications.pets.schemas import PetIn
-from applications.pets.models import PetDAO
-from utils.pyobjectid import PyObjectId
-from db_operations.operations import create_one as create_one_op
-from db_operations.operations import read_one as read_one_op
-from db_operations.operations import read_many as read_many_op
-from db_operations.operations import delete_one as delete_one_op
+from charlie.applications.pets.schemas import PetIn
+from charlie.applications.pets.models import PetDAO
+from charlie.utils.pyobjectid import PyObjectId
+from charlie.db_operations.operations import create_one as create_one_op
+from charlie.db_operations.operations import read_one as read_one_op
+from charlie.db_operations.operations import read_many as read_many_op
+from charlie.db_operations.operations import delete_one as delete_one_op
 
 from motor.motor_asyncio import AsyncIOMotorClient
 

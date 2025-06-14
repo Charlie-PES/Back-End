@@ -9,9 +9,9 @@ from charlie.applications.owners.schemas import (
 
 from charlie.applications.users.utils import verify_password
 from charlie.utils.pyobjectid import PyObjectId
-from db_operations.operations import create_one as create_one_op
-from db_operations.operations import read_one as read_one_op
-from db_operations.operations import read_many as read_many_op
+from charlie.db_operations.operations import create_one as create_one_op
+from charlie.db_operations.operations import read_one as read_one_op
+from charlie.db_operations.operations import read_many as read_many_op
 
 
 from motor.motor_asyncio import AsyncIOMotorClient

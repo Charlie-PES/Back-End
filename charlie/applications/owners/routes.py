@@ -8,8 +8,8 @@ from charlie.applications.owners.schemas import (
     OwnerIn,
 )
 from charlie.utils.pyobjectid import PyObjectId
-from . import controllers as owner_controllers
-from dependencies.database import get_database
+from charlie.applications.owners import controllers as owner_controllers
+from charlie.dependencies.database import get_database
 from motor.motor_asyncio import AsyncIOMotorClient
 
 router = APIRouter(prefix="/owners", tags=["owners"])
