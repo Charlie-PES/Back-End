@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 from motor.motor_asyncio import AsyncIOMotorClient
-from settings import Settings
+from charlie.settings import Settings
 
 settings = Settings()
 

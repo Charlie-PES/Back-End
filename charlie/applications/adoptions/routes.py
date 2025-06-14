@@ -1,11 +1,11 @@
 from collections.abc import Iterable
 from fastapi import APIRouter, Depends, status
-from utils.pyobjectid import PyObjectId
-from dependencies.database import get_database
-from .models import AdoptionDAO
-from settings import Settings
+from charlie.utils.pyobjectid import PyObjectId
+from charlie.dependencies.database import get_database
+from charlie.applications.adoptions.models import AdoptionDAO
+from charlie.settings import Settings
 from motor.motor_asyncio import AsyncIOMotorClient
-from . import controllers as adoption_controllers
+from charlie.applications.adoptions import controllers as adoption_controllers
 
 settings = Settings()
 router = APIRouter(tags=["adoption"])

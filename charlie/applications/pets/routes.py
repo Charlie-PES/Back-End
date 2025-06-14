@@ -1,13 +1,12 @@
 from collections.abc import Iterable
-from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
-from utils.pyobjectid import PyObjectId
-from dependencies.database import get_database
+from charlie.utils.pyobjectid import PyObjectId
+from charlie.dependencies.database import get_database
 from .schemas import PetIn
 from .models import PetDAO
-from settings import Settings
+from charlie.settings import Settings
 from motor.motor_asyncio import AsyncIOMotorClient
-from . import controllers as pets_controllers
+from charlie.applications.pets import controllers as pets_controllers
 
 settings = Settings()
 router = APIRouter(tags=["pets"])

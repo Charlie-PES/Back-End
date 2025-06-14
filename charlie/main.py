@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from utils.routes import register_routes
-from dependencies.database import start_db, close_db
-from settings import Settings
+from charlie.utils.routes import register_routes
+from charlie.dependencies.database import start_db, close_db
+from charlie.settings import Settings
 from contextlib import asynccontextmanager
 
 
@@ -38,7 +38,10 @@ app = create_app()
 
 def main() -> None:
     uvicorn.run(
-        "main:app", host=settings.HOST, port=settings.PORT, reload=settings.RELOAD
+        "charlie.main:app",
+        host=settings.HOST,
+        port=settings.PORT,
+        reload=settings.RELOAD,
     )
 
 

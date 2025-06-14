@@ -17,23 +17,20 @@ Certifique-se de ter o seguinte instalado em sua máquina:
    git clone <URL_DO_REPOSITORIO>
    cd charlie-backend
    ```
-2. Crie um ambiente virtual (opcional, mas recomendado):
+2. Crie um ambiente com Anaconda ou use um virtual:
 
    **python3** **-m** **venv** **venv**
 
    **source** **venv/bin/activate**  **# No Windows: venv\Scripts\activate**
-3. Instale as dependências:
+3. No diretório raiz, instale o projeto como um pacote:
 
-   **pip** **install** **-r** **requirements.txt**
+   **pip install -e .**
 
 ## Executando o Servidor
 
-1. Navegue até o diretório `src/charlie-backend`:
+1. Configure o .env e execute no diretório raiz:
 
-   **cd** **src/charlie-backend**
-2. Inicie o servidor FastAPI com o Uvicorn:
-
-   **python** **main.py**
+   **python -m charlie**
 3. O servidor estará disponível em: [http://127.0.0.1:8080](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
 
 ## Endpoints Disponíveis

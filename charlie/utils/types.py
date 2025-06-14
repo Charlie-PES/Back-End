@@ -1,12 +1,12 @@
 from typing import Union
-from applications.adoptions.schemas import AdoptionIn, AdoptionUpdate
-from applications.owners.schemas import OwnerIn, OwnerUpdate
-from applications.pets.models import PetDAO
-from applications.pets.schemas import PetIn, PetUpdate
-from applications.users.models import UserDAO
-from applications.owners.models import OwnerDAO
-from applications.adoptions.models import AdoptionDAO
-from applications.users.schemas import UserIn
+from charlie.applications.adoptions.schemas import AdoptionIn, AdoptionUpdate
+from charlie.applications.owners.schemas import OwnerIn, OwnerUpdate
+from charlie.applications.pets.models import PetDAO
+from charlie.applications.pets.schemas import PetIn, PetUpdate
+from charlie.applications.users.models import UserDAO
+from charlie.applications.owners.models import OwnerDAO
+from charlie.applications.adoptions.models import AdoptionDAO
+from charlie.applications.users.schemas import UserIn
 
 Entity = Union[PetDAO, UserDAO, OwnerDAO, AdoptionDAO]
 

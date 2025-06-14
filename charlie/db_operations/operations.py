@@ -2,9 +2,9 @@ from collections.abc import AsyncIterable
 from bson import ObjectId
 from fastapi import HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
-from db_operations.utils import DatabaseError, DocumentNotFoundError
+from charlie.db_operations.utils import DatabaseError, DocumentNotFoundError
 from pymongo.errors import DuplicateKeyError, PyMongoError
-from utils.types import Entity, EntityIn, EntityUpdate
+from charlie.utils.types import Entity, EntityIn, EntityUpdate
 from typing import Any
 from typing import Type
 
