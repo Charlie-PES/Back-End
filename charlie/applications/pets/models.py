@@ -10,7 +10,6 @@ from bson import ObjectId
 
 class PetDAO(PetIn):
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
-    is_available: bool = True
 
     @classmethod
     def indexes(cls) -> list[IndexModel]:
