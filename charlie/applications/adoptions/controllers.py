@@ -12,6 +12,8 @@ from charlie.db_operations.operations import (
     delete_one as delete_one_op,
     update_one as update_one_op,
 )
+from charlie.applications.users.models import UserDAO
+from charlie.applications.adoptions.compatibility import calcular_compatibilidade
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -93,3 +95,37 @@ async def delete_one(
         update_data={"$pull": {"pets": pet_id}},
         db=db,
     )
+
+
+async def relatorio_compatibilidade(
+    desired_species: str,
+    desired_size: str,
+    desired_sex: str,
+    accepts_special_needs: bool,
+    accepts_chronic_disease: bool,
+    has_other_pets: bool,
+    has_time: bool,
+    db
+):
+    # Monta o dicionário de preferências do adotante
+    adotante_prefs = {
+        "desired_species": desired_species,
+        "desired_size": desired_size,
+        "desired_sex": desired_sex,
+        "accepts_special_needs": accepts_special_needs,
+        "accepts_chronic_disease": accepts_chronic_disease,
+        "has_other_pets": has_other_pets,
+        "has_time": has_time
+    }
+    pets = await read_many_op(entity=PetDAO, db=db, filters={"is_available": True})
+    relatorio = []
+    for pet in pets:
+        score = calcular_compatibilidade(adotante_prefs, pet.model_dump())
+        if score != float('-inf'):
+            relatorio.append({
+                "pet_id": str(pet.id),
+                "pet_name": getattr(pet, 'name', None),
+                "score": score
+            })
+    relatorio.sort(key=lambda x: x["score"])
+    return relatorio
